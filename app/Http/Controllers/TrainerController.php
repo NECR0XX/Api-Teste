@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trainer;
 use Illuminate\Http\Request;
 
 class TrainerController extends Controller
@@ -11,7 +12,8 @@ class TrainerController extends Controller
      */
     public function index()
     {
-        //
+        $trainers = Trainer::all();
+        return response()->json($trainers);
     }
 
     /**
@@ -27,7 +29,16 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            "name" => "required|string|max:255",
+            "age" => "required|string|max:255",
+            "height" => "required|string|max:255",
+            "weight" => "required|string|max:255",
+            "cpf" => "required|string|max:255",
+            "rg" => "required|string|max:255",
+        ]);
+        $trainer = Trainer::create($validatedData);
+        return response()->json($trainer, 201);
     }
 
     /**
@@ -35,7 +46,11 @@ class TrainerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $trainer = Trainer::find($id);
+        if(!$trainer) {
+            return response()->json(["message" => "Trainer Not Found"], 404);
+        }
+        return response()->json($trainer);
     }
 
     /**
@@ -51,7 +66,20 @@ class TrainerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $trainer = Trainer::find($id);
+        if(!$trainer) {
+            return response()->json(["message" => "Trainer Not Found"], 404);
+        }
+        $validatedData = $request->validate([
+            "name" => "required|string|max:255",
+            "age" => "required|string|max:255",
+            "height" => "required|string|max:255",
+            "weight" => "required|string|max:255",
+            "cpf" => "required|string|max:255",
+            "rg" => "required|string|max:255",
+        ]);
+        $trainer->update($validatedData);
+        return response()->json($trainer, 200);
     }
 
     /**
@@ -59,6 +87,11 @@ class TrainerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $trainer = Trainer::find($id);
+        if(!$trainer){
+            return response()->json(["message" => "Trainer Not Found"], 404);
+        }
+        $trainer->delete();
+        return response()->json(["message" => "Trainer Deleted Sucessfully"], 200);
     }
 }

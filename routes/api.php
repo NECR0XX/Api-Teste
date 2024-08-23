@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CompetitorController;
+use App\Http\Controllers\LocalityController;
+use App\Http\Controllers\TrainerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SportController;
@@ -16,3 +19,6 @@ Route::get('/minhas-informacoes', function () {
 });
 
 Route::apiResource('/Sports', SportController::class);
+Route::apiResource('/Competitor', CompetitorController::class);
+Route::apiResource('/Locality', LocalityController::class);
+Route::apiResource('/Trainer', TrainerController::class);

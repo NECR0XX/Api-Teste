@@ -9,7 +9,7 @@ class Locality extends Model
 {
     use HasFactory;
 
-    protected $table = "localitys";
+    protected $table = "locality";
     protected $fillable = [
         'road',
         'neighborhood',

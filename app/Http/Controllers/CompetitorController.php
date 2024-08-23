@@ -30,14 +30,14 @@ class CompetitorController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            "name" => "required|string|255",
-            "age" => "required|integer",
-            "height" => "required|integer",
-            "weight" => "required|integer",
-            "sex" => "required|string|255",
-            "cpf" => "required|integer",
-            "rg" => "required|integer",
-            "team" => "required|string|255",
+            "name" => "required|string|max:255",
+            "age" => "required|string|max:255",
+            "height" => "required|string|max:255",
+            "weight" => "required|string|max:255",
+            "sex" => "required|string|max:255",
+            "cpf" => "required|string|max:255",
+            "rg" => "required|string|max:255",
+            "team" => "required|string|max:255",
         ]);
         $competitor = Competitor::create($validatedData);
         return response()->json($competitor, 201);
@@ -68,7 +68,22 @@ class CompetitorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $competitor = Competitor::find($id);
+        if(!$competitor) {
+            return response()->json(["message" => "Competitor Not Found"], 404);
+        }
+        $validatedData = $request->validate([
+            "name" => "required|string|max:255",
+            "age" => "required|string|max:255",
+            "height" => "required|string|max:255",
+            "weight" => "required|string|max:255",
+            "sex" => "required|string|max:255",
+            "cpf" => "required|string|max:255",
+            "rg" => "required|string|max:255",
+            "team" => "required|string|max:255",
+        ]);
+        $competitor->update($validatedData);
+        return response()->json($competitor, 200);
     }
 
     /**
@@ -76,6 +91,11 @@ class CompetitorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $competitor = Competitor::find($id);
+        if(!$competitor){
+            return response()->json(["message" => "Competitor Not Found"], 404);
+        }
+        $competitor->delete();
+        return response()->json(["message" => "Competitor Deleted Sucessfully"], 200);
     }
 }

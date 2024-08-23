@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("age");
-            $table->integer("height");
-            $table->integer("weight");
+            $table->string("height");
+            $table->string("weight");
             $table->string("sex");
-            $table->integer("cpf");
-            $table->integer("rg");
+            $table->string("cpf");
+            $table->string("rg");
             $table->string("team");
+            $table->timestamps();
         });
     }
 

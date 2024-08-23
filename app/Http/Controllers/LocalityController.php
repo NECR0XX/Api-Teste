@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Locality;
 use Illuminate\Http\Request;
 
 class LocalityController extends Controller
@@ -11,7 +12,8 @@ class LocalityController extends Controller
      */
     public function index()
     {
-        //
+        $localitys = Locality::all();
+        return response()->json($localitys);
     }
 
     /**
@@ -27,7 +29,17 @@ class LocalityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            "road" => "required|string|max:255",
+            "neighborhood" => "required|string|max:255",
+            "number" => "required|string|max:255",
+            "cep" => "required|string|max:255",
+            "city" => "required|string|max:255",
+            "state" => "required|string|max:255",
+            "country" => "required|string|max:255",
+        ]);
+        $locality = Locality::create($validatedData);
+        return response()->json($locality, 201);
     }
 
     /**
@@ -35,7 +47,11 @@ class LocalityController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $locality = Locality::find($id);
+        if(!$locality) {
+            return response()->json(["message" => "Locality Not Found"], 404);
+        }
+        return response()->json($locality);
     }
 
     /**
@@ -51,7 +67,21 @@ class LocalityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $locality = Locality::find($id);
+        if(!$locality) {
+            return response()->json(["message" => "Locality Not Found"], 404);
+        }
+        $validatedData = $request->validate([
+            "road" => "required|string|max:255",
+            "neighborhood" => "required|string|max:255",
+            "number" => "required|string|max:255",
+            "cep" => "required|string|max:255",
+            "city" => "required|string|max:255",
+            "state" => "required|string|max:255",
+            "country" => "required|string|max:255",
+        ]);
+        $locality->update($validatedData);
+        return response()->json($locality, 200);
     }
 
     /**
@@ -59,6 +89,11 @@ class LocalityController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $locality = Locality::find($id);
+        if(!$locality){
+            return response()->json(["message" => "Locality Not Found"], 404);
+        }
+        $locality->delete();
+        return response()->json(["message" => "Locality Deleted Sucessfully"], 200);
     }
 }

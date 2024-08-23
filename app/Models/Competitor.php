@@ -9,7 +9,7 @@ class Competitor extends Model
 {
     use HasFactory;
 
-    protected $table = "competitors";
+    protected $table = "competitor";
     protected $fillable = [
         'name',
         'age',

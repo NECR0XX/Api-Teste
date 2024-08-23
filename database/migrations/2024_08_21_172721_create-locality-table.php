@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string("road");
             $table->string("neighborhood");
-            $table->integer("number");
-            $table->integer("cep");
+            $table->string("number");
+            $table->string("cep");
             $table->string("city");
             $table->string("state");
             $table->string("country");
+            $table->timestamps();
         });
     }
 
